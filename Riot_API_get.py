@@ -1,11 +1,12 @@
 import requests
 import os
 import warnings
+from datetime import datetime
 warnings.filterwarnings('ignore')
+        
 
 #### Variables ####
 api_key = "RGAPI-74a8d7fe-ee9d-4c42-9d70-561f1f727068"
-
 gameName = "Schadra"
 tagLine = "EUW"
 
@@ -37,6 +38,11 @@ with open(os.path.dirname(__file__) + (f"/matchids{gameName}.txt"),"a+", encodin
             file.write("\n")
             file.write(entry)
 if len(need_check) == 0:
+    with open(os.path.dirname(__file__) + "/log.txt", "a+") as file:
+        file.write("\n")
+        file.write("No NEW matches... going to sleep again")
+        file.write("   Timestamp: ")
+        file.write(str(datetime.now()))
     print("No NEW matches... going to sleep again")
 else:
     print("NEW MATCHES:")
@@ -82,7 +88,7 @@ def match_get_data(id,gameName):
     else: penta = ""
 
     returnstring = (f"{rid_name} played a {gamemode} on {champ} as {role} and {win} with {total_k} Kills :fist:, {total_d} Deaths :skull: and {assists} Assists :family: after {int(time_played/60)} min. Total Damage Dealt: {total_dd} Damage Taken: {total_dt} Gold earned: {gold}:coin:. {msg}!!!{penta}")
-   
+    """
     try:
         with open(os.path.dirname(__file__) + "/log.txt", "w+") as file:
             for entry in participants[name_number]:
@@ -92,11 +98,12 @@ def match_get_data(id,gameName):
                 file.write("\n")
     except UnicodeEncodeError:
         pass
-
+    """
     ###########werid test####
+    """
     for i in range(0, len(list(names))):
         try:
-            with open(os.path.dirname(__file__) + "/log.txt", "a+") as file:
+            with open(os.path.dirname(__file__) + "/testdata.txt", "a+") as file:
                     file.write("\n")
                     file.write("\n")
                     file.write("\n")
@@ -147,6 +154,13 @@ def match_get_data(id,gameName):
 
         except UnicodeEncodeError:
             pass
+        """
+    with open(os.path.dirname(__file__) + "/log.txt", "a+") as file:
+        file.write("\n")
+        file.write(returnstring)
+        file.write("\n")
+        file.write("Timestamp: ")
+        file.write(str(datetime.now()))
 
     return returnstring
 
